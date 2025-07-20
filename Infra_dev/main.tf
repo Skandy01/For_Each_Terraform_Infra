@@ -22,3 +22,15 @@ module "storage_account" {
     account_replication_type = each.value.account_replication_type
 
 }
+
+module "public_ip" {
+
+    source = "../Modules/public_ip"
+    for_each = var.public_ip_info
+
+    public_ip_name = each.value.public_ip_name
+    location = each.value.location
+    resource_group_name = each.value.resource_group_name
+    allocation_method = each.value.allocation_method
+
+}
