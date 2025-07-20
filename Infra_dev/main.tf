@@ -25,6 +25,7 @@ module "storage_account" {
 
 module "public_ip" {
 
+    depends_on = [module.resource_group]
     source = "../Modules/public_ip"
     for_each = var.public_ip_info
 
@@ -33,4 +34,29 @@ module "public_ip" {
     resource_group_name = each.value.resource_group_name
     allocation_method = each.value.allocation_method
 
+}
+
+module "virtual_network" {
+
+    source = "../Modules/virtual_network"
+    depends_on = [module.resource_group]
+    for_each = var.virtual_network_info
+    virtual_network_name = each.value.virtual_network_name
+    resource_group_name = each.value.resource_group_name
+    virtual_network_location = each.value.virtual_network_location
+    virtual_network_address_space = each.value.virtual_network_address_space
+
+
+}
+
+module "subnet" {
+
+    source = "../Modules/subnet"
+    depends_on = [module.virtual_network]
+    for_each = var.subnet_info
+    
+    subnet_name = each.value.subnet_name
+    resource_group_name = each.value.resource_group_name
+    virtual_network_name = each.value.virtual_network_name
+    address_prefixes = each.value.subnet_address_prefix
 }

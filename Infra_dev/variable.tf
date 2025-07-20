@@ -32,3 +32,29 @@ variable "public_ip_info" {
         allocation_method = string
     }))
 }
+
+variable "virtual_network_info" {
+
+    description = "values for the virtual network"
+    type = map(object (
+        {
+        virtual_network_name = string
+        resource_group_name = string
+        virtual_network_location = string
+        virtual_network_address_space = list(string)
+        }    
+    ))
+}
+
+variable "subnet_info" {
+
+    description = "value for the subnet"
+    type = map(object(
+        {
+            subnet_name = string
+            resource_group_name = string
+            virtual_network_name = string
+            subnet_address_prefix = list(string)
+        }
+    ))
+}
