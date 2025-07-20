@@ -58,3 +58,55 @@ variable "subnet_info" {
         }
     ))
 }
+
+variable "network_interface_info" {
+
+    description = "Information for the network interfaces to be created"
+    type = map(object({
+        
+        network_interface_name = string
+        resource_group_name = string
+        location = string
+
+        ip_configuration_name = string
+        subnet_key = string
+        pip_key = string
+        private_ip_address_allocation = string
+
+    }))
+}
+
+
+# variable "virtual_machine_info" {
+    
+#     description = "value for the virtual machines"
+#     type = map(any)
+# }
+
+variable "virtual_machine_info" {
+
+    description = "Information for the virtual machines to be created"
+
+    type = map(object({
+
+        virtual_machine_name = string
+        resource_group_name = string
+        location = string
+        virtual_machine_size = string
+
+        network_interface_key = string
+
+        admin_username = string
+        admin_password = string
+        disable_password_authentication = bool
+
+        os_disk_caching = string
+        os_disk_storage_account_type = string
+
+        image_publisher = string
+        image_offer = string
+        image_sku = string
+        image_version = string
+    }))
+}
+
