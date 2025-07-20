@@ -22,3 +22,13 @@ variable "storage_account_info" {
     )
     )
 }
+
+variable "public_ip_info" {
+    description = "Information for the public IPs to be created"
+    type = map(object({
+        public_ip_name = string
+        location = string
+        resource_group_name = string
+        allocation_method = string
+    }))
+}
