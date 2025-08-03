@@ -10,10 +10,12 @@ pool: Azure Pipelines
 steps:
 
 - task: TerraformInstaller@1
+  displayName: 'Terraform Install'
   inputs:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
+  displayName : 'Terraform init'
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -25,6 +27,7 @@ steps:
     backendAzureRmKey: 'pipeline.tfstate'
 
 - task: TerraformTask@5
+  displayName : 'Terraform Validate'
   inputs:
     provider: 'azurerm'
     command: 'validate'
@@ -32,6 +35,7 @@ steps:
 
 
 - task: TerraformTask@5
+  displayName: 'Terraform fmt'
   inputs:
     provider: 'azurerm'
     command: 'custom'
@@ -42,6 +46,7 @@ steps:
 
 
 - task: TerraformTask@5
+  displayName: 'Terraform plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
