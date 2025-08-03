@@ -13,7 +13,17 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Infra_dev'
+    backendServiceArm: 'workload_identity_federation_connection'
+    backendAzureRmOverrideSubscriptionID: '959b5bec-4c7a-4fce-958e-8d10c69abe92'
+    backendAzureRmResourceGroupName: 'rg-pipeline'
+    backendAzureRmStorageAccountName: 'stgpipeline'
+    backendAzureRmContainerName: 'contpipeline'
+    backendAzureRmKey: 'yaml-pipeline.tfstate'
 
 
 
