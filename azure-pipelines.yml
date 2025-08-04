@@ -1,16 +1,24 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger: none
 
 pool: Azure Pipelines
 
-variables:
+parameters:
+  - name: runInit
+    type: boolean
+    default: true
+  - name: runValidate
+    type: boolean
+    default: true
+  - name: runFmt
+    type: boolean
+    default: true
+  - name: runPlan
+    type: boolean
+    default: true
 
+variables:
   working_path: '$(System.DefaultWorkingDirectory)/Infra_dev'
-  wif : 'workload_identity_federation_connection'
+  wif: 'workload_identity_federation_connection'
 
 steps:
 
@@ -20,10 +28,9 @@ steps:
     terraformVersion: 'latest'
 
 - task: TerraformTask@5
-  displayName : 'Terraform init'
-
+  displayName: 'Terraform init'
+  condition: eq('${{ parameters.runInit }}', true)
   inputs:
-
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(working_path)'
@@ -34,16 +41,16 @@ steps:
     backendAzureRmKey: 'pipeline.tfstate'
 
 - task: TerraformTask@5
-  displayName : 'Terraform Validate'
+  displayName: 'Terraform Validate'
+  condition: eq('${{ parameters.runValidate }}', true)
   inputs:
     provider: 'azurerm'
     command: 'validate'
     workingDirectory: '$(working_path)'
 
-
-
 - task: TerraformTask@5
   displayName: 'Terraform fmt'
+  condition: eq('${{ parameters.runFmt }}', true)
   inputs:
     provider: 'azurerm'
     command: 'custom'
@@ -52,18 +59,11 @@ steps:
     customCommand: 'fmt'
     environmentServiceNameAzureRM: '$(wif)'
 
-
 - task: TerraformTask@5
   displayName: 'Terraform plan'
+  condition: eq('${{ parameters.runPlan }}', true)
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(working_path)'
     environmentServiceNameAzureRM: '$(wif)'
-    
-
-
-
-
-
-
