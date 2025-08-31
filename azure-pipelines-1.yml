@@ -14,7 +14,7 @@ steps:
     which terraform
     ls -l /opt/hostedtoolcache/terraform/1.13.1/x64/
   displayName: 'Debug Terraform Path'
-- task: TerraformTask@5
+- task: TerraformTask@4
   displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
