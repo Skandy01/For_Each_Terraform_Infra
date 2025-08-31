@@ -7,6 +7,9 @@ steps:
   displayName: 'Terraform Installer'
   inputs:
     terraformVersion: 'latest'
+- script: |
+    terraform --version
+  displayName: 'Check Terraform Version'
 - task: TerraformTask@5
   displayName: 'Terraform Init'
   inputs:
