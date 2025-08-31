@@ -10,6 +10,10 @@ steps:
 - script: |
     terraform --version
   displayName: 'Check Terraform Version'
+- script: |
+    which terraform
+    ls -l /opt/hostedtoolcache/terraform/1.13.1/x64/
+  displayName: 'Debug Terraform Path'
 - task: TerraformTask@5
   displayName: 'Terraform Init'
   inputs:
