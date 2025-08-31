@@ -19,7 +19,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(workDir)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/Infra_dev'
     backendServiceArm: 'redo_ADO'
     backendAzureRmResourceGroupName: 'RG_SP'
     backendAzureRmStorageAccountName: 'stgsp'
